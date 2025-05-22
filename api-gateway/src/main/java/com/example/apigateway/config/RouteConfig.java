@@ -40,12 +40,24 @@ public class RouteConfig {
                                                     HttpStatus.SERVICE_UNAVAILABLE)))
                         .uri("lb://MICROSERVICE-B"))
 
+                // Route for microservice-c
+                .route("microservice-c-route", r -> r.path("/api/service-c/**")
+                        .filters(f -> f.stripPrefix(2)
+                                .retry(config -> config.setRetries(3)
+                                        .setStatuses(HttpStatus.INTERNAL_SERVER_ERROR,
+                                                    HttpStatus.BAD_GATEWAY,
+                                                    HttpStatus.SERVICE_UNAVAILABLE)))
+                        .uri("lb://MICROSERVICE-C"))
+
                 // Fallback routes
                 .route("fallback-service-a", r -> r.path("/fallback/service-a")
                         .uri("forward:/fallback/service-a"))
 
                 .route("fallback-service-b", r -> r.path("/fallback/service-b")
                         .uri("forward:/fallback/service-b"))
+
+                .route("fallback-service-c", r -> r.path("/fallback/service-c")
+                        .uri("forward:/fallback/service-c"))
 
                 .route("fallback-default", r -> r.path("/fallback/default")
                         .uri("forward:/fallback/default"))
