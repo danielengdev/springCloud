@@ -72,3 +72,19 @@ services:
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
+
+  # banco de dados
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: dbservicec  # Nome do seu banco de dados
+      POSTGRES_USER: postgres         # Nome do usuário do banco de dados
+      POSTGRES_PASSWORD: postgres # Senha do usuário do banco de dados
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

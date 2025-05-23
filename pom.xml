@@ -21,6 +21,7 @@
     <module>api-gateway</module>
     <module>microservice-a</module>
     <module>microservice-b</module>
+    <module>microservice-c</module>
   </modules>
 
   <dependencyManagement>
